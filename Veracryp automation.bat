@@ -1,5 +1,12 @@
 @echo off
+
+rem Input validation function to check if the drive letter is "1"
+:CheckDriveLetter
 set /p drive_letter=Enter the drive letter of the connected disk (e.g., E): 
+if /I "%drive_letter%"=="1" (
+    echo Disk 1 is not allowed. Please select a different disk.
+    goto CheckDriveLetter
+)
 
 rem Delete the disk volume
 echo sel disk %drive_letter% > diskpart_script.txt
@@ -14,9 +21,8 @@ echo create partition primary >> diskpart_script.txt
 echo format fs=ntfs quick >> diskpart_script.txt
 diskpart /s diskpart_script.txt
 
-
 rem Veracrypt the disk
-set /p veracrypt_drive_letter=Enter the drive letter to mount Veracrypt volume:
+set /p veracrypt_drive_letter=Enter the drive letter to mount VeraCrypt volume: 
 set /p veracrypt_password=Enter the Veracrypt password: 
 veracrypt /v %drive_letter%2 /l %veracrypt_drive_letter% /p %veracrypt_password% --encryption=AES
 
