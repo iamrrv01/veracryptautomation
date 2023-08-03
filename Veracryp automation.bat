@@ -9,8 +9,11 @@ diskpart /s diskpart_script.txt
 rem Create two volumes - one of 1024 MB and the other using the remaining space
 echo sel disk %drive_letter% > diskpart_script.txt
 echo create partition primary size=1024 >> diskpart_script.txt
+echo format fs=ntfs quick >> diskpart_script.txt
 echo create partition primary >> diskpart_script.txt
+echo format fs=ntfs quick >> diskpart_script.txt
 diskpart /s diskpart_script.txt
+
 
 rem Veracrypt the disk
 set /p veracrypt_drive_letter=Enter the drive letter to mount Veracrypt volume:
