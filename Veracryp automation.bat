@@ -8,10 +8,13 @@ if /I "%drive_letter%"=="1" (
     goto CheckDriveLetter
 )
 
-rem Delete the disk volume
-echo sel disk %drive_letter% > diskpart_script.txt
-echo remove all noerr >> diskpart_script.txt
-diskpart /s diskpart_script.txt
+rem Delete the disk volume (with user permission)
+set /p delete_partitions=Do you want to delete existing partitions on the disk? (Y/N): 
+if /I "%delete_partitions%"=="Y" (
+    echo sel disk %drive_letter% > diskpart_script.txt
+    echo remove all noerr >> diskpart_script.txt
+    diskpart /s diskpart_script.txt
+)
 
 rem Create two volumes - one of 1024 MB and the other using the remaining space
 echo sel disk %drive_letter% > diskpart_script.txt
